@@ -158,27 +158,33 @@ newsCarousel.addEventListener('keydown', (event) => {
 new ResizeObserver(updateNewsControls).observe(newsCarousel);
 updateNewsControls();
 
-const partnerCarousel = select('.partner-carousel');
-const partnerTrack = select('.partner-carousel-track');
-const partnerToggle = select('.partner-carousel-toggle');
-const repeatedLogos = select('.partner-logos').cloneNode(true);
-repeatedLogos.setAttribute('aria-hidden', 'true');
-partnerTrack.append(repeatedLogos);
-
-function setPartnerMotion() {
-  partnerCarousel.classList.toggle('is-animated', motion.matches);
-  partnerToggle.hidden = !motion.matches;
-}
-
-partnerToggle.addEventListener('click', () => {
-  const paused = partnerCarousel.classList.toggle('is-paused');
-  partnerToggle.textContent = paused ? 'Retomar logos' : 'Pausar logos';
+const partnerVisibility = new IntersectionObserver((entries) => {
+  for (const entry of entries) {
+    entry.target.classList.toggle('is-visible', entry.isIntersecting);
+  }
 });
-new IntersectionObserver(([entry]) => {
-  partnerCarousel.classList.toggle('is-visible', entry.isIntersecting);
-}).observe(partnerCarousel);
-motion.addEventListener('change', setPartnerMotion);
-setPartnerMotion();
+
+for (const group of selectAll('.partner-group')) {
+  const carousel = group.querySelector('.partner-carousel');
+  const track = group.querySelector('.partner-carousel-track');
+  const toggle = group.querySelector('.partner-carousel-toggle');
+  const repeatedLogos = track.querySelector('.partner-logos').cloneNode(true);
+  repeatedLogos.setAttribute('aria-hidden', 'true');
+  track.append(repeatedLogos);
+
+  const setMotion = () => {
+    carousel.classList.toggle('is-animated', motion.matches);
+    toggle.hidden = !motion.matches;
+  };
+
+  toggle.addEventListener('click', () => {
+    const paused = carousel.classList.toggle('is-paused');
+    toggle.textContent = paused ? 'Retomar logos' : 'Pausar logos';
+  });
+  partnerVisibility.observe(carousel);
+  motion.addEventListener('change', setMotion);
+  setMotion();
+}
 
 const scene = select('#hero-scene');
 import('./hero-scene.js')
