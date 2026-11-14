@@ -126,6 +126,38 @@ quoteForm.addEventListener('submit', (event) => {
   window.open(`https://wa.me/${quoteUnit.value}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
 });
 
+const newsCarousel = select('#news-carousel');
+const newsPrevious = select('[data-news-prev]');
+const newsNext = select('[data-news-next]');
+const newsCards = [...newsCarousel.children];
+select('.news-controls').hidden = false;
+
+function updateNewsControls() {
+  newsPrevious.disabled = newsCarousel.scrollLeft <= 2;
+  newsNext.disabled = newsCarousel.scrollLeft >= newsCarousel.scrollWidth - newsCarousel.clientWidth - 2;
+}
+
+function moveNews(direction) {
+  const firstCardLeft = newsCards[0].offsetLeft;
+  const stops = newsCards.map((card) => card.offsetLeft - firstCardLeft);
+  const position = newsCarousel.scrollLeft;
+  const next = direction > 0
+    ? stops.find((stop) => stop > position + 2)
+    : stops.reverse().find((stop) => stop < position - 2);
+  if (next !== undefined) newsCarousel.scrollTo({ left: next, behavior: motion.matches ? 'smooth' : 'instant' });
+}
+
+newsPrevious.addEventListener('click', () => moveNews(-1));
+newsNext.addEventListener('click', () => moveNews(1));
+newsCarousel.addEventListener('scroll', updateNewsControls, { passive: true });
+newsCarousel.addEventListener('keydown', (event) => {
+  if (event.target !== newsCarousel || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+  event.preventDefault();
+  moveNews(event.key === 'ArrowRight' ? 1 : -1);
+});
+new ResizeObserver(updateNewsControls).observe(newsCarousel);
+updateNewsControls();
+
 const scene = select('#hero-scene');
 import('./hero-scene.js')
   .then(({ startHeroScene }) => startHeroScene({ hero, stage: scene.parentElement, canvas: scene, motion, finePointer }))
