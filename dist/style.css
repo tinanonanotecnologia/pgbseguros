@@ -261,9 +261,28 @@ em { color: var(--gold-light); font-style: normal; }
 .footer { border-top: 1px solid #d6b3643b; padding: 23px 0; color: white; }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 17px; }
 .footer p { color: var(--mist); font-size: .74rem; }
-.float-contact { position: fixed; right: max(20px, env(safe-area-inset-right)); bottom: max(21px, env(safe-area-inset-bottom)); z-index: 8; display: grid; place-items: center; width: 51px; height: 51px; color: white; background: var(--green); border: 1px solid #ffffff6e; border-radius: 50%; box-shadow: 0 6px 22px #07162b50; transition: background .2s, transform .2s; }
-.float-contact:hover { background: var(--green-hover); transform: translateY(-3px); }
-.float-contact .icon { width: 23px; height: 23px; }
+.float-contact {
+  position: fixed;
+  right: max(20px, env(safe-area-inset-right));
+  bottom: max(21px, env(safe-area-inset-bottom));
+  z-index: 8;
+  display: grid;
+  place-items: center;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.float-contact img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 4px 7px #07162b60);
+  pointer-events: none;
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .float-contact img { transition: transform .2s ease; }
+  .float-contact:hover img { transform: translateY(-3px); }
+}
 .quote-dialog { position: fixed; width: min(490px, calc(100% - 32px)); max-height: calc(100% - 32px); padding: clamp(20px, 5vw, 34px); border: 1px solid var(--gold); border-radius: 16px; background: #fffdfa; color: var(--navy); box-shadow: 0 25px 90px #0008; }
 .quote-dialog::backdrop { background: #061126cc; backdrop-filter: blur(5px); }
 .quote-dialog h2 { font-size: clamp(1.7rem, 6vw, 2.35rem); margin-top: 10px; }
@@ -345,7 +364,7 @@ em { color: var(--gold-light); font-style: normal; }
   .office { padding-inline: 13px; }
   .footer-inner { display: grid; grid-template-columns: 1fr; justify-items: start; gap: 8px; }
   .footer .text-link { min-height: 37px; }
-  .float-contact { width: 46px; height: 46px; right: 12px; bottom: max(12px, env(safe-area-inset-bottom)); }
+  .float-contact { width: 52px; height: 52px; right: max(12px, env(safe-area-inset-right)); bottom: max(12px, env(safe-area-inset-bottom)); }
 }
 
 @media (max-width: 345px) {
