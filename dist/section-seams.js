@@ -1,4 +1,25 @@
 const clamp = (value) => Math.min(1, Math.max(0, value));
+const smooth = (value) => {
+  const t = clamp(value);
+  return t * t * (3 - 2 * t);
+};
+
+const samples = 64;
+
+function fillWave(context, points, width, height, offset, paint) {
+  context.beginPath();
+  for (let index = 0; index <= samples; index++) {
+    const x = index * width / samples;
+    const y = Math.min(height, points[index] + offset);
+    if (index === 0) context.moveTo(x, y);
+    else context.lineTo(x, y);
+  }
+  context.lineTo(width, height);
+  context.lineTo(0, height);
+  context.closePath();
+  context.fillStyle = paint;
+  context.fill();
+}
 
 export function startSectionSeams(main, motion) {
   const seams = [...main.querySelectorAll('.section-seam')].flatMap((element) => {
@@ -6,13 +27,13 @@ export function startSectionSeams(main, motion) {
     const context = canvas.getContext('2d');
     if (!context) return [];
     return [{
-      element, canvas, context, width: 0, height: 0, progress: -1, tiles: [],
+      element, canvas, context, width: 0, height: 0, progress: -1,
+      points: new Float32Array(samples + 1), ribbon: null,
       color: getComputedStyle(element).getPropertyValue('--seam-color').trim(),
     }];
   });
   if (!seams.length) return;
 
-  const angles = Array.from({ length: 6 }, (_, index) => Math.PI * (index / 3 - .5));
   let frame = 0;
 
   function resize(seam) {
@@ -28,55 +49,37 @@ export function startSectionSeams(main, motion) {
     seam.width = width;
     seam.height = height;
     seam.progress = -1;
-    seam.tiles = [];
-    const radius = width < 650 ? 15 : 25;
-    const step = Math.sqrt(3) * radius;
-    for (let row = 0, y = height + radius; y >= -radius; row++, y -= radius * 1.5) {
-      for (let column = 0, x = (row % 2) * step / 2; x <= width + step / 2; column++, x += step) {
-        const wave = Math.sin(x / width * 7.5 + row * .51) * .10;
-        const delay = clamp((height - y) / height * .63 + .14 + wave + (column % 3) * .021);
-        seam.tiles.push({ x, y, radius, delay, warm: (row + column) % 5 === 0 });
-      }
-    }
+    const ribbon = context.createLinearGradient(0, height, width, 0);
+    ribbon.addColorStop(0, '#082f79');
+    ribbon.addColorStop(.58, '#064a5e');
+    ribbon.addColorStop(1, '#078c47');
+    seam.ribbon = ribbon;
   }
 
   function draw(seam, progress) {
-    if (Math.abs(seam.progress - progress) < .001 && progress !== 1 && progress !== 0) return;
-    if (seam.progress === progress) return;
+    if (seam.progress === progress || (progress > 0 && progress < 1 && Math.abs(seam.progress - progress) < .001)) return;
     seam.progress = progress;
-    const { context, width, height, tiles, color } = seam;
+    const { context, width, height, points, color, ribbon } = seam;
     context.clearRect(0, 0, width, height);
     if (progress === 0) return;
 
-    if (progress === 1) {
-      context.fillStyle = color;
-      context.fillRect(0, 0, width, height);
-      return;
+    // A diagonal sweep arrives from the right. A traveling curve softens its edge.
+    for (let index = 0; index <= samples; index++) {
+      const x = index / samples;
+      const arrival = smooth((progress - (1 - x) * .39) / .61);
+      const curve = Math.sin(x * Math.PI * 1.34 - progress * 3.5);
+      const depth = .45 + x * .46 + curve * .11 * (1 - progress);
+      points[index] = height * (1 - depth * arrival);
     }
 
-    for (const tile of tiles) {
-      const amount = clamp((progress - tile.delay) / .27);
-      if (amount === 0) continue;
-      const eased = 1 - (1 - amount) ** 2;
-      const spin = (1 - eased) * (tile.warm ? -.4 : .25);
-      const radius = (tile.radius + .36) * (.36 + eased * .64);
-      const depth = .17 + .83 * eased;
-      context.beginPath();
-      angles.forEach((angle, index) => {
-        const x = tile.x + Math.cos(angle + spin) * radius * depth;
-        const y = tile.y + Math.sin(angle + spin) * radius;
-        if (index === 0) context.moveTo(x, y);
-        else context.lineTo(x, y);
-      });
-      context.closePath();
-      context.fillStyle = color;
-      context.fill();
-      if (amount < .98) {
-        context.strokeStyle = tile.warm ? `rgba(231, 187, 97, ${.83 * (1 - amount)})` : `rgba(99, 158, 206, ${.56 * (1 - amount)})`;
-        context.lineWidth = 1.1;
-        context.stroke();
-      }
+    const accent = smooth(progress / .28) * (1 - smooth((progress - .66) / .34));
+    const band = height * .15 * accent;
+    const highlight = height * .025 * accent;
+    if (accent > 0) {
+      fillWave(context, points, width, height, 0, '#d6b364');
+      fillWave(context, points, width, height, highlight, ribbon);
     }
+    fillWave(context, points, width, height, band + highlight, color);
   }
 
   function update() {
@@ -87,7 +90,7 @@ export function startSectionSeams(main, motion) {
       resize(seam);
       if (!seam.height) continue;
       const boundary = seam.element.getBoundingClientRect().bottom;
-      draw(seam, clamp((viewport * .99 - boundary) / (viewport * .78)));
+      draw(seam, clamp((viewport * .93 - boundary) / (viewport * .71)));
     }
   }
 
