@@ -158,6 +158,28 @@ newsCarousel.addEventListener('keydown', (event) => {
 new ResizeObserver(updateNewsControls).observe(newsCarousel);
 updateNewsControls();
 
+const partnerCarousel = select('.partner-carousel');
+const partnerTrack = select('.partner-carousel-track');
+const partnerToggle = select('.partner-carousel-toggle');
+const repeatedLogos = select('.partner-logos').cloneNode(true);
+repeatedLogos.setAttribute('aria-hidden', 'true');
+partnerTrack.append(repeatedLogos);
+
+function setPartnerMotion() {
+  partnerCarousel.classList.toggle('is-animated', motion.matches);
+  partnerToggle.hidden = !motion.matches;
+}
+
+partnerToggle.addEventListener('click', () => {
+  const paused = partnerCarousel.classList.toggle('is-paused');
+  partnerToggle.textContent = paused ? 'Retomar logos' : 'Pausar logos';
+});
+new IntersectionObserver(([entry]) => {
+  partnerCarousel.classList.toggle('is-visible', entry.isIntersecting);
+}).observe(partnerCarousel);
+motion.addEventListener('change', setPartnerMotion);
+setPartnerMotion();
+
 const scene = select('#hero-scene');
 import('./hero-scene.js')
   .then(({ startHeroScene }) => startHeroScene({ hero, stage: scene.parentElement, canvas: scene, motion, finePointer }))
