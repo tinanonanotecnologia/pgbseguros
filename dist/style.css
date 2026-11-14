@@ -47,7 +47,6 @@ em { color: var(--gold-light); font-style: normal; }
 .header.on-light { background: #f8f4ebee; color: var(--navy); border-color: #0b1f4418; }
 .header-inner { min-height: var(--header); display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 26px; }
 .brand { display: inline-flex; align-items: center; gap: 11px; justify-self: start; flex: none; }
-.brand img { border-radius: 50%; background: var(--white); }
 .brand > span { font-size: 1.11rem; font-weight: 800; letter-spacing: -.045em; line-height: 1.1; white-space: nowrap; }
 .brand b { font-weight: 600; }
 .brand small { display: block; font-size: .53rem; margin-top: 5px; letter-spacing: .16em; font-weight: 700; color: var(--gold-light); }
