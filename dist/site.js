@@ -127,36 +127,46 @@ quoteForm.addEventListener('submit', (event) => {
 });
 
 const newsCarousel = select('#news-carousel');
-const newsPrevious = select('[data-news-prev]');
-const newsNext = select('[data-news-next]');
 const newsCards = [...newsCarousel.children];
-select('.news-controls').hidden = false;
+const newsInterval = 6500;
+let newsInView = false;
+let newsTimer;
 
-function updateNewsControls() {
-  newsPrevious.disabled = newsCarousel.scrollLeft <= 2;
-  newsNext.disabled = newsCarousel.scrollLeft >= newsCarousel.scrollWidth - newsCarousel.clientWidth - 2;
-}
-
-function moveNews(direction) {
+function moveNews(direction, wrap = false) {
   const firstCardLeft = newsCards[0].offsetLeft;
-  const stops = newsCards.map((card) => card.offsetLeft - firstCardLeft);
+  const end = newsCarousel.scrollWidth - newsCarousel.clientWidth;
+  const stops = newsCards.map((card) => Math.min(end, card.offsetLeft - firstCardLeft));
   const position = newsCarousel.scrollLeft;
   const next = direction > 0
     ? stops.find((stop) => stop > position + 2)
     : stops.reverse().find((stop) => stop < position - 2);
-  if (next !== undefined) newsCarousel.scrollTo({ left: next, behavior: motion.matches ? 'smooth' : 'instant' });
+  if (next === undefined && !wrap) return;
+  newsCarousel.scrollTo({ left: next ?? 0, behavior: motion.matches ? 'smooth' : 'instant' });
 }
 
-newsPrevious.addEventListener('click', () => moveNews(-1));
-newsNext.addEventListener('click', () => moveNews(1));
-newsCarousel.addEventListener('scroll', updateNewsControls, { passive: true });
+function scheduleNews() {
+  clearTimeout(newsTimer);
+  if (!newsInView || document.hidden || !motion.matches) return;
+  newsTimer = setTimeout(() => {
+    const isReading = newsCarousel.matches(':focus-within') || (finePointer.matches && newsCarousel.matches(':hover'));
+    if (!isReading) moveNews(1, true);
+    scheduleNews();
+  }, newsInterval);
+}
+
+new IntersectionObserver(([entry]) => {
+  newsInView = entry.isIntersecting;
+  scheduleNews();
+}, { threshold: .35 }).observe(newsCarousel);
+motion.addEventListener('change', scheduleNews);
+document.addEventListener('visibilitychange', scheduleNews);
+newsCarousel.addEventListener('pointerdown', scheduleNews, { passive: true });
+newsCarousel.addEventListener('wheel', scheduleNews, { passive: true });
 newsCarousel.addEventListener('keydown', (event) => {
   if (event.target !== newsCarousel || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
   event.preventDefault();
   moveNews(event.key === 'ArrowRight' ? 1 : -1);
 });
-new ResizeObserver(updateNewsControls).observe(newsCarousel);
-updateNewsControls();
 
 const partnerVisibility = new IntersectionObserver((entries) => {
   for (const entry of entries) {
