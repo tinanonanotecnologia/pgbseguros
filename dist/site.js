@@ -126,92 +126,10 @@ quoteForm.addEventListener('submit', (event) => {
   window.open(`https://wa.me/${quoteUnit.value}?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
 });
 
-const heroArt = select('.hero-art');
-const artFrame = select('#art-frame');
-heroArt.addEventListener('pointermove', (event) => {
-  if (!motion.matches || !finePointer.matches) return;
-  const bounds = heroArt.getBoundingClientRect();
-  artFrame.style.setProperty('--rx', `${(0.5 - (event.clientY - bounds.top) / bounds.height) * 8}deg`);
-  artFrame.style.setProperty('--ry', `${((event.clientX - bounds.left) / bounds.width - 0.5) * 8}deg`);
-});
-heroArt.addEventListener('pointerleave', () => {
-  artFrame.style.removeProperty('--rx');
-  artFrame.style.removeProperty('--ry');
-});
+const scene = select('#hero-scene');
+import('./hero-scene.js')
+  .then(({ startHeroScene }) => startHeroScene({ hero, stage: scene.parentElement, canvas: scene, motion, finePointer }))
+  .catch(() => {}); // Keep the original logo visible if 3D is unavailable.
 
-// Gold rings and particles add depth to the navy background. The canvas runs only in view.
-const canvas = select('#hero-motion');
-const context = canvas.getContext('2d');
-if (context) {
-  const particles = Array.from({ length: 31 }, () => ({
-    x: Math.random(), y: Math.random(), size: .4 + Math.random() * 1.4, phase: Math.random() * 7,
-  }));
-  let width = 0;
-  let height = 0;
-  let pointerX = 0;
-  let pointerY = 0;
-  let offsetX = 0;
-  let offsetY = 0;
-  let visible = true;
-  let animation = 0;
-
-  function draw(time) {
-    animation = 0;
-    context.clearRect(0, 0, width, height);
-    const animate = motion.matches && visible && !document.hidden;
-    const tick = animate ? time * .001 : 0;
-    offsetX += ((animate ? pointerX : 0) - offsetX) * .055;
-    offsetY += ((animate ? pointerY : 0) - offsetY) * .055;
-    const centerX = width * (width < 650 ? .65 : .76) + offsetX * 33;
-    const centerY = height * (width < 650 ? .71 : .55) + offsetY * 26;
-    const radius = Math.min(width * .37, 390);
-
-    for (let ring = 0; ring < 4; ring++) {
-      context.beginPath();
-      context.strokeStyle = ring === 0 ? '#d6b36452' : '#d6b36429';
-      context.lineWidth = 1;
-      context.ellipse(centerX, centerY, radius * (1 + ring * .19), radius * (.59 + ring * .15), -.62, 0, Math.PI * 2);
-      context.stroke();
-    }
-
-    particles.forEach((particle, index) => {
-      const x = (particle.x * .63 + .34) * width + Math.sin(tick * .37 + particle.phase) * 12 + offsetX * 19;
-      const y = particle.y * height + Math.cos(tick * .29 + particle.phase) * 9 + offsetY * 14;
-      const alpha = .25 + .38 * ((Math.sin(tick * .6 + particle.phase) + 1) / 2);
-      context.fillStyle = index % 6 === 0 ? `rgba(80, 199, 139, ${alpha})` : `rgba(239, 206, 143, ${alpha})`;
-      context.beginPath();
-      context.arc(x, y, particle.size, 0, Math.PI * 2);
-      context.fill();
-    });
-    if (animate) scheduleDraw();
-  }
-
-  function scheduleDraw() {
-    if (!animation) animation = requestAnimationFrame(draw);
-  }
-
-  const resizeCanvas = new ResizeObserver(() => {
-    width = hero.clientWidth;
-    height = hero.clientHeight;
-    const density = Math.min(devicePixelRatio, 1.5);
-    canvas.width = Math.round(width * density);
-    canvas.height = Math.round(height * density);
-    context.setTransform(density, 0, 0, density, 0, 0);
-    scheduleDraw();
-  });
-  const watchHero = new IntersectionObserver(([entry]) => {
-    visible = entry.isIntersecting;
-    if (visible) scheduleDraw();
-  });
-  resizeCanvas.observe(hero);
-  watchHero.observe(hero);
-  hero.addEventListener('pointermove', (event) => {
-    if (!motion.matches || !finePointer.matches) return;
-    const bounds = hero.getBoundingClientRect();
-    pointerX = (event.clientX - bounds.left) / width - .5;
-    pointerY = (event.clientY - bounds.top) / height - .5;
-  }, { passive: true });
-  hero.addEventListener('pointerleave', () => { pointerX = 0; pointerY = 0; });
-  document.addEventListener('visibilitychange', scheduleDraw);
-  motion.addEventListener('change', scheduleDraw);
-}
+import('./section-seams.js')
+  .then(({ startSectionSeams }) => startSectionSeams(select('main'), motion));

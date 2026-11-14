@@ -42,7 +42,6 @@
   <main id="conteudo" tabindex="-1">
     <section class="hero" id="inicio" aria-labelledby="titulo-principal">
       <div class="hero-grid" aria-hidden="true"></div>
-      <canvas class="hero-motion" id="hero-motion" aria-hidden="true"></canvas>
       <div class="wrap hero-inner">
         <div class="hero-copy">
           <p class="kicker"><span aria-hidden="true"></span> Corretora de seguros desde 2014</p>
@@ -58,20 +57,21 @@
           </div>
         </div>
         <div class="hero-art" aria-hidden="true">
-          <div class="art-frame" id="art-frame">
-            <div class="portrait"><img src="assets/familia-pgb.webp" alt="" width="1000" height="1250" fetchpriority="high"></div>
-            <div class="portrait-caption">
-              <span class="caption-icon"><svg class="icon"><use href="assets/icons.svg#shield"></use></svg></span>
-              <div><strong>Atendimento personalizado</strong><span>Saúde, vida e patrimônio</span></div>
-            </div>
+          <div class="hero-stage">
+            <div class="hero-medal"><img src="assets/logo-pgb.webp" alt="" width="1499" height="1500" fetchpriority="high"></div>
+            <canvas id="hero-scene"></canvas>
           </div>
-          <span class="art-spark"></span>
+          <div class="hero-caption">
+            <span class="caption-icon"><svg class="icon"><use href="assets/icons.svg#shield"></use></svg></span>
+            <div><strong>Atendimento personalizado</strong><span>Saúde, vida e patrimônio</span></div>
+          </div>
         </div>
       </div>
       <div class="hero-edge" aria-hidden="true"></div>
     </section>
 
     <section class="section solutions" id="solucoes" aria-labelledby="solucoes-titulo">
+      <div class="section-seam" aria-hidden="true"><canvas></canvas></div>
       <div class="wrap">
         <div class="section-heading" data-reveal>
           <div><p class="kicker"><span aria-hidden="true"></span> Seguros e planos</p><h2 id="solucoes-titulo">Encontre a proteção<br class="desktop-break"> que você precisa</h2></div>
@@ -119,6 +119,7 @@
     </section>
 
     <section class="section about" id="sobre" aria-labelledby="sobre-titulo">
+      <div class="section-seam" aria-hidden="true"><canvas></canvas></div>
       <div class="about-lines" aria-hidden="true"></div>
       <div class="wrap about-layout">
         <div class="about-intro" data-reveal>
@@ -137,6 +138,7 @@
     </section>
 
     <section class="partners" aria-labelledby="parceiros-titulo">
+      <div class="section-seam" aria-hidden="true"><canvas></canvas></div>
       <div class="wrap partner-layout" data-reveal>
         <div><p class="kicker"><span aria-hidden="true"></span> Parcerias</p><h2 id="parceiros-titulo">Seguradoras e operadoras</h2></div>
         <div class="partner-groups">
@@ -147,6 +149,7 @@
     </section>
 
     <section class="section blog" id="blog" aria-labelledby="blog-titulo">
+      <div class="section-seam" aria-hidden="true"><canvas></canvas></div>
       <div class="wrap">
         <div class="section-heading" data-reveal>
           <div><p class="kicker"><span aria-hidden="true"></span> Blog da PGB</p><h2 id="blog-titulo">Antes de contratar</h2></div>
@@ -162,6 +165,7 @@
     </section>
 
     <section class="section contact" id="contato" aria-labelledby="contato-titulo">
+      <div class="section-seam" aria-hidden="true"><canvas></canvas></div>
       <div class="wrap contact-layout">
         <div class="contact-copy" data-reveal>
           <p class="kicker"><span aria-hidden="true"></span> Atendimento PGB</p>
