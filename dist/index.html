@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1f44">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="A PGB Seguros orienta você na escolha de planos de saúde e seguros para sua família e empresa. Atendimento em Macapá e Belém.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:title" content="PGB Seguros | Seguros e Planos de Saúde">
+  <meta property="og:description" content="Seguros e planos de saúde para você, sua família e sua empresa. Atendimento em Macapá e Belém.">
+  <meta property="og:image" content="https://pgb-seguros.pimetools0001.chatgpt.site/assets/pgb-social.jpg">
+  <meta property="og:image:alt" content="Identidade visual da PGB Seguros e Planos de Saúde">
+  <title>PGB Seguros | Seguros e Planos de Saúde</title>
+  <link rel="icon" href="assets/logo-pgb.webp" type="image/webp">
+  <link rel="preload" href="assets/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="style.css">
+  <script src="site.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#conteudo">Pular para o conteúdo</a>
+  <header class="header" id="cabecalho">
+    <div class="wrap header-inner">
+      <a class="brand" href="#inicio" aria-label="PGB Seguros, início">
+        <img src="assets/logo-pgb.webp" width="46" height="46" alt="">
+        <span>PGB <b>Seguros</b><small>PLANOS DE SAÚDE</small></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu" hidden>
+        <span></span><span></span><span></span><span class="sr-only">Menu</span>
+      </button>
+      <nav class="nav" id="menu" aria-label="Navegação principal">
+        <a href="#solucoes">Soluções</a>
+        <a href="#sobre">Sobre a PGB</a>
+        <a href="#blog">Blog</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <a class="button header-quote" href="#contato" data-quote>Solicitar cotação <span class="arrow" aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <section class="hero" id="inicio" aria-labelledby="titulo-principal">
+      <div class="hero-grid" aria-hidden="true"></div>
+      <canvas class="hero-motion" id="hero-motion" aria-hidden="true"></canvas>
+      <div class="wrap hero-inner">
+        <div class="hero-copy">
+          <p class="kicker"><span aria-hidden="true"></span> Corretora de seguros desde 2014</p>
+          <h1 id="titulo-principal">Seguros e planos<br class="desktop-break"> de saúde com <em>orientação.</em></h1>
+          <p class="hero-description">Conte com a PGB para comparar opções e escolher a proteção certa para você, sua família ou sua empresa.</p>
+          <div class="hero-actions">
+            <a class="button" href="#contato" data-quote>Solicitar cotação <span class="arrow" aria-hidden="true">↗</span></a>
+            <a class="text-link" href="#solucoes">Explorar soluções <span aria-hidden="true">↓</span></a>
+          </div>
+          <div class="hero-locations">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg>
+            <a href="#macapa">Macapá, AP</a><i aria-hidden="true"></i><a href="#belem">Belém, PA</a>
+          </div>
+        </div>
+        <div class="hero-art" aria-hidden="true">
+          <div class="art-frame" id="art-frame">
+            <div class="portrait"><img src="assets/familia-pgb.webp" alt="" width="1000" height="1250" fetchpriority="high"></div>
+            <div class="portrait-caption">
+              <span class="caption-icon"><svg class="icon"><use href="assets/icons.svg#shield"></use></svg></span>
+              <div><strong>Atendimento personalizado</strong><span>Saúde, vida e patrimônio</span></div>
+            </div>
+          </div>
+          <span class="art-spark"></span>
+        </div>
+      </div>
+      <div class="hero-edge" aria-hidden="true"></div>
+    </section>
+
+    <section class="section solutions" id="solucoes" aria-labelledby="solucoes-titulo">
+      <div class="wrap">
+        <div class="section-heading" data-reveal>
+          <div><p class="kicker"><span aria-hidden="true"></span> Seguros e planos</p><h2 id="solucoes-titulo">Encontre a proteção<br class="desktop-break"> que você precisa</h2></div>
+          <p>Da assistência à saúde à proteção do patrimônio, a PGB ajuda você a comparar as opções de acordo com a sua rotina e o seu orçamento.</p>
+        </div>
+        <div class="filters" role="group" aria-label="Filtrar soluções" hidden>
+          <button type="button" aria-pressed="true" data-filter="todos">Todas</button>
+          <button type="button" aria-pressed="false" data-filter="pessoal">Você e sua família</button>
+          <button type="button" aria-pressed="false" data-filter="empresa">Sua empresa</button>
+        </div>
+        <p class="sr-only" id="filter-status" aria-live="polite"></p>
+        <div class="product-grid" id="produtos">
+          <a class="product featured" href="#contato" data-quote="Planos de saúde" data-audience="pessoal empresa">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#health"></use></svg><h3>Planos de saúde</h3><p>Para você, sua família ou sua equipe.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Planos odontológicos" data-audience="pessoal empresa">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#tooth"></use></svg><h3>Planos odontológicos</h3><p>Opções para o cuidado com a saúde bucal.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Seguro de vida" data-audience="pessoal empresa">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#heart"></use></svg><h3>Seguro de vida</h3><p>Proteção financeira para quem depende de você.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Seguro auto" data-audience="pessoal">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#car"></use></svg><h3>Seguro auto</h3><p>Coberturas para o seu veículo e sua rotina.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Seguro residencial" data-audience="pessoal">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#house"></use></svg><h3>Seguro residencial</h3><p>Proteção para sua casa e seus bens.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Seguro empresarial" data-audience="empresa">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#building"></use></svg><h3>Seguro empresarial</h3><p>Proteção para o patrimônio da sua empresa.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Seguro de frota" data-audience="empresa">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#truck"></use></svg><h3>Seguro de frota</h3><p>Coberturas para os veículos do seu negócio.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Seguro de transporte" data-audience="empresa">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#package"></use></svg><h3>Seguro de transporte</h3><p>Opções de proteção para cargas em trânsito.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Seguro viagem" data-audience="pessoal empresa">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#plane"></use></svg><h3>Seguro viagem</h3><p>Assistência para imprevistos longe de casa.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+          <a class="product" href="#contato" data-quote="Previdência privada" data-audience="pessoal">
+            <svg class="icon" aria-hidden="true"><use href="assets/icons.svg#chart"></use></svg><h3>Previdência privada</h3><p>Alternativas para planejar o futuro financeiro.</p><span class="product-arrow" aria-hidden="true">↗</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="sobre" aria-labelledby="sobre-titulo">
+      <div class="about-lines" aria-hidden="true"></div>
+      <div class="wrap about-layout">
+        <div class="about-intro" data-reveal>
+          <p class="kicker"><span aria-hidden="true"></span> Nossa história</p>
+          <h2 id="sobre-titulo">Experiência que ajuda você a <em>escolher melhor.</em></h2>
+          <p>Fundada por Patrick Germano, a PGB Seguros atua desde 2014. A corretora atende clientes em todo o Brasil e tem unidades em Macapá e Belém.</p>
+          <a class="text-link" href="#contato">Fale com nossa equipe <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="timeline" data-reveal>
+          <div class="timeline-track" aria-hidden="true"><i></i></div>
+          <article><strong>1994</strong><h3>Patrick Germano entra no setor</h3><p>O fundador e CEO da PGB inicia sua trajetória no mercado brasileiro de seguros.</p></article>
+          <article><strong>2014</strong><h3>Início da PGB Seguros</h3><p>A corretora passa a oferecer seguros e planos de saúde para pessoas, famílias e empresas.</p></article>
+          <article><strong>Hoje</strong><h3>Atendimento de ponta a ponta</h3><p>A equipe entende o que você precisa, compara propostas de seguradoras e operadoras e orienta você na contratação.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="partners" aria-labelledby="parceiros-titulo">
+      <div class="wrap partner-layout" data-reveal>
+        <div><p class="kicker"><span aria-hidden="true"></span> Parcerias</p><h2 id="parceiros-titulo">Seguradoras e operadoras</h2></div>
+        <div class="partner-groups">
+          <div><h3>Saúde e odontologia</h3><ul><li>GEAP</li><li>São Camilo</li><li>Unimed</li><li>SulAmérica</li><li>Bradesco</li><li>Amil</li><li>Select</li></ul></div>
+          <div><h3>Seguros</h3><ul><li>Porto</li><li>Tokio Marine</li><li>Allianz</li><li>Itaú</li><li>Azul Seguros</li><li>MAPFRE</li><li>HDI</li></ul></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section blog" id="blog" aria-labelledby="blog-titulo">
+      <div class="wrap">
+        <div class="section-heading" data-reveal>
+          <div><p class="kicker"><span aria-hidden="true"></span> Blog da PGB</p><h2 id="blog-titulo">Antes de contratar</h2></div>
+          <a class="text-link" href="https://pgbcorretora.com.br/blog/" target="_blank" rel="noopener noreferrer">Ver o blog da PGB <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="article-list" data-reveal>
+          <a href="https://pgbcorretora.com.br/como-escolher-o-melhor-plano-de-saude-para-sua-familia/" target="_blank" rel="noopener noreferrer"><span>Saúde</span><h3>Como escolher um plano de saúde para sua família</h3><i aria-hidden="true">↗</i></a>
+          <a href="https://pgbcorretora.com.br/seguro-de-vida-um-investimento-no-futuro-da-sua-familia/" target="_blank" rel="noopener noreferrer"><span>Vida</span><h3>Por que o seguro de vida ajuda a proteger o futuro da sua família</h3><i aria-hidden="true">↗</i></a>
+          <a href="https://pgbcorretora.com.br/seguro-de-automovel-o-que-realmente-importa-na-hora-de-contratar/" target="_blank" rel="noopener noreferrer"><span>Auto</span><h3>O que considerar na hora de contratar um seguro auto</h3><i aria-hidden="true">↗</i></a>
+          <a href="https://pgbcorretora.com.br/por-que-contar-com-uma-corretora-de-seguros-faz-diferenca/" target="_blank" rel="noopener noreferrer"><span>Corretoria</span><h3>Como uma corretora ajuda na escolha do seguro</h3><i aria-hidden="true">↗</i></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contato" aria-labelledby="contato-titulo">
+      <div class="wrap contact-layout">
+        <div class="contact-copy" data-reveal>
+          <p class="kicker"><span aria-hidden="true"></span> Atendimento PGB</p>
+          <h2 id="contato-titulo">Fale com nossa equipe</h2>
+          <p>Converse com a unidade mais próxima para tirar dúvidas ou pedir uma cotação.</p>
+          <ul class="contact-info">
+            <li><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#clock"></use></svg> Segunda a sexta, das 8h às 18h</li>
+            <li><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#phone"></use></svg><a href="tel:+559632172434">(96) 3217-2434</a></li>
+            <li><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#mail"></use></svg><a href="mailto:pgb@pgbseguros.com.br">pgb@pgbseguros.com.br</a></li>
+          </ul>
+        </div>
+        <div class="offices">
+          <article class="office" id="macapa" data-reveal>
+            <h3><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg> Macapá <span>AP</span></h3>
+            <address>Av. Coaracy Nunes, 1236, lojas A, B e C<br>Bairro Central, Macapá – AP, 68900-010</address>
+            <div><a class="button" href="https://wa.me/5596991491995" target="_blank" rel="noopener noreferrer">WhatsApp Macapá <span aria-hidden="true">↗</span></a><a class="office-phone" href="tel:+5596991491995">(96) 99149-1995</a></div>
+          </article>
+          <article class="office" id="belem" data-reveal>
+            <h3><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#pin"></use></svg> Belém <span>PA</span></h3>
+            <address>Tv. Dom Romualdo de Seixas, 999, loja A, Ed. C Silvia<br>Bairro Umarizal, Belém – PA, 66055-200</address>
+            <div><a class="button" href="https://wa.me/5591993351995" target="_blank" rel="noopener noreferrer">WhatsApp Belém <span aria-hidden="true">↗</span></a><a class="office-phone" href="tel:+5591993351995">(91) 99335-1995</a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <a class="brand" href="#inicio" aria-label="PGB Seguros, voltar ao início"><img src="assets/logo-pgb.webp" width="46" height="46" alt=""><span>PGB <b>Seguros</b><small>PLANOS DE SAÚDE</small></span></a>
+      <p>© PGB Corretora de Seguros · Prévia do site</p>
+      <a class="text-link" href="https://www.instagram.com/pgb_seguros/" target="_blank" rel="noopener noreferrer">@pgb_seguros <span aria-hidden="true">↗</span></a>
+    </div>
+  </footer>
+
+  <a class="float-contact" href="#contato" data-quote aria-label="Abrir contato por WhatsApp"><svg class="icon" aria-hidden="true"><use href="assets/icons.svg#chat"></use></svg></a>
+
+  <dialog class="quote-dialog" id="cotacao" aria-labelledby="cotacao-titulo">
+    <button class="dialog-close" type="button" aria-label="Fechar janela">×</button>
+    <p class="kicker"><span aria-hidden="true"></span> Atendimento PGB</p>
+    <h2 id="cotacao-titulo">Solicite uma cotação</h2>
+    <p>Escolha o produto e a unidade. O WhatsApp abre com uma mensagem pronta para você revisar e enviar.</p>
+    <form id="quote-form">
+      <label for="quote-product">Qual produto você procura?</label>
+      <select id="quote-product"><option value="">Ainda estou decidindo</option></select>
+      <label for="quote-unit">Qual unidade você quer contatar?</label>
+      <select id="quote-unit"><option value="5596991491995">Macapá, AP</option><option value="5591993351995">Belém, PA</option></select>
+      <button class="button" type="submit">Continuar no WhatsApp <span aria-hidden="true">↗</span></button>
+    </form>
+  </dialog>
+</body>
+</html>
