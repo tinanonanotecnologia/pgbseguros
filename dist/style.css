@@ -143,7 +143,7 @@ em { color: var(--gold-light); font-style: normal; }
 .about { position: relative; background: linear-gradient(132deg, #0c2147 8%, #0a1934 94%); color: white; }
 .about-lines { position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent 0 68px, #fff1 69px 70px), linear-gradient(137deg, transparent 50%, #325e951c 50% 68%, transparent 68%); mask-image: linear-gradient(90deg, transparent, #000 50%, #000a); pointer-events: none; }
 .about-layout { position: relative; }
-.about-layout { display: grid; grid-template-columns: .97fr 1.03fr; align-items: start; gap: clamp(34px, 7vw, 105px); }
+.about-layout { display: grid; grid-template-columns: .97fr 1.03fr; align-items: center; gap: clamp(34px, 7vw, 105px); }
 .about-intro > p:not(.kicker), .contact-copy > p:not(.kicker) { margin: 18px 0 16px; color: var(--mist); max-width: 490px; }
 .timeline { position: relative; display: grid; gap: 22px; padding-left: 24px; margin-top: 3px; }
 .timeline-track { position: absolute; top: 12px; left: 1px; bottom: 26px; width: 1px; background: #d6b36430; }
@@ -171,6 +171,14 @@ em { color: var(--gold-light); font-style: normal; }
 @media (hover: hover) {
   .flag-card:hover .flag-card-edge::after { background-position: 0 50%; }
 }
+.founder-card { max-width: 540px; margin: 0 0 clamp(25px, 4vw, 46px); border-color: #d6b36463; }
+.founder-card .flag-stripes { height: 23px; }
+.founder-card img { width: 100%; height: auto; aspect-ratio: 3 / 2; object-fit: cover; }
+.founder-card figcaption { padding: 14px clamp(16px, 2.3vw, 28px) 34px; }
+.founder-card figcaption strong, .founder-card figcaption span { display: block; }
+.founder-card figcaption strong { font-size: clamp(1.06rem, 2vw, 1.42rem); color: var(--gold-light); letter-spacing: -.03em; }
+.founder-card figcaption span { font-size: .8rem; color: #edf1f8; }
+.founder-card .flag-card-edge { height: 29px; }
 .partners { padding-block: 48px; background: #fffdfa; border-bottom: 1px solid var(--line); }
 .partner-layout { display: grid; grid-template-columns: .75fr 1.25fr; gap: 32px; align-items: start; }
 .partners h2 { font-size: clamp(1.75rem, 3vw, 2.5rem); }
