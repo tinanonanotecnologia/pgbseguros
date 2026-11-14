@@ -13,7 +13,7 @@ const menuButton = select('.menu-toggle');
 const menu = select('.nav');
 const menuLinks = selectAll('.nav a');
 const sections = selectAll('main > section');
-const lightSections = new Set(['solucoes', 'blog', 'parceiros-titulo']);
+const lightSections = new Set(['solucoes', 'diferenciais', 'blog', 'parceiros-titulo']);
 const timeline = select('.timeline');
 const hero = select('.hero');
 const heroCopy = select('.hero-copy');
@@ -39,10 +39,10 @@ document.addEventListener('keydown', (event) => {
 
 function updateScroll() {
   scrollFrame = 0;
-  const headerBottom = header.offsetHeight;
+  const anchorOffset = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) + 1;
   const section = sections.find((element) => {
     const bounds = element.getBoundingClientRect();
-    return bounds.top <= headerBottom && bounds.bottom > headerBottom;
+    return bounds.top <= anchorOffset && bounds.bottom > anchorOffset;
   });
   const activeSection = section?.id || section?.getAttribute('aria-labelledby');
   header.classList.toggle('scrolled', scrollY > 20);
