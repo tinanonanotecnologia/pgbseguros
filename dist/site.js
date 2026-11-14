@@ -128,20 +128,56 @@ quoteForm.addEventListener('submit', (event) => {
 
 const newsCarousel = select('#news-carousel');
 const newsCards = [...newsCarousel.children];
+const newsPagination = select('.news-pagination');
 const newsInterval = 6500;
 let newsInView = false;
 let newsTimer;
 
-function moveNews(direction, wrap = false) {
+function getNewsStops() {
   const firstCardLeft = newsCards[0].offsetLeft;
   const end = newsCarousel.scrollWidth - newsCarousel.clientWidth;
-  const stops = newsCards.map((card) => Math.min(end, card.offsetLeft - firstCardLeft));
+  const starts = newsCards.map((card) => card.offsetLeft - firstCardLeft);
+  return [...starts.filter((left) => left < end - 2), end];
+}
+
+function scrollNews(left) {
+  newsCarousel.scrollTo({ left, behavior: motion.matches ? 'smooth' : 'instant' });
+}
+
+function syncNewsPagination() {
+  const stops = getNewsStops();
+  if (newsPagination.children.length !== stops.length) {
+    const buttons = stops.map((_, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.setAttribute('aria-label', `Ir para a posição ${index + 1} do carrossel`);
+      button.setAttribute('aria-controls', newsCarousel.id);
+      button.addEventListener('click', () => {
+        scrollNews(getNewsStops()[index]);
+        scheduleNews();
+      });
+      return button;
+    });
+    newsPagination.replaceChildren(...buttons);
+    newsPagination.hidden = stops.length < 2;
+  }
+
+  const position = newsCarousel.scrollLeft;
+  const active = stops.reduce((nearest, stop, index) =>
+    Math.abs(stop - position) < Math.abs(stops[nearest] - position) ? index : nearest, 0);
+  [...newsPagination.children].forEach((button, index) => {
+    button.setAttribute('aria-current', String(index === active));
+  });
+}
+
+function moveNews(direction, wrap = false) {
+  const stops = getNewsStops();
   const position = newsCarousel.scrollLeft;
   const next = direction > 0
     ? stops.find((stop) => stop > position + 2)
     : stops.reverse().find((stop) => stop < position - 2);
   if (next === undefined && !wrap) return;
-  newsCarousel.scrollTo({ left: next ?? 0, behavior: motion.matches ? 'smooth' : 'instant' });
+  scrollNews(next ?? 0);
 }
 
 function scheduleNews() {
@@ -162,6 +198,8 @@ motion.addEventListener('change', scheduleNews);
 document.addEventListener('visibilitychange', scheduleNews);
 newsCarousel.addEventListener('pointerdown', scheduleNews, { passive: true });
 newsCarousel.addEventListener('wheel', scheduleNews, { passive: true });
+newsCarousel.addEventListener('scroll', syncNewsPagination, { passive: true });
+new ResizeObserver(syncNewsPagination).observe(newsCarousel);
 newsCarousel.addEventListener('keydown', (event) => {
   if (event.target !== newsCarousel || !['ArrowLeft', 'ArrowRight'].includes(event.key)) return;
   event.preventDefault();
