@@ -164,26 +164,13 @@ const partnerVisibility = new IntersectionObserver((entries) => {
   }
 });
 
-for (const group of selectAll('.partner-group')) {
-  const carousel = group.querySelector('.partner-carousel');
-  const track = group.querySelector('.partner-carousel-track');
-  const toggle = group.querySelector('.partner-carousel-toggle');
+for (const carousel of selectAll('.partner-carousel')) {
+  const track = carousel.querySelector('.partner-carousel-track');
   const repeatedLogos = track.querySelector('.partner-logos').cloneNode(true);
   repeatedLogos.setAttribute('aria-hidden', 'true');
   track.append(repeatedLogos);
-
-  const setMotion = () => {
-    carousel.classList.toggle('is-animated', motion.matches);
-    toggle.hidden = !motion.matches;
-  };
-
-  toggle.addEventListener('click', () => {
-    const paused = carousel.classList.toggle('is-paused');
-    toggle.textContent = paused ? 'Retomar logos' : 'Pausar logos';
-  });
+  carousel.classList.add('is-animated');
   partnerVisibility.observe(carousel);
-  motion.addEventListener('change', setMotion);
-  setMotion();
 }
 
 const scene = select('#hero-scene');
